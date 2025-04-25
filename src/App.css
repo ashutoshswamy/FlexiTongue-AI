@@ -1,5 +1,25 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
+:root {
+  --primary-color: #38bdf8;
+  --primary-gradient: linear-gradient(90deg, #38bdf8, #818cf8);
+  --bg-dark: #0f172a;
+  --bg-medium: #1e293b;
+  --border-color: #475569;
+  --text-light: #f8fafc;
+  --text-muted: #94a3b8;
+  --shadow-sm: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --transition: all 0.3s ease;
+  --border-radius: 8px;
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -8,8 +28,8 @@
 }
 
 body {
-  background-color: #0f172a;
-  color: #f8fafc;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
 }
 
 .App {
@@ -18,14 +38,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
+  padding: var(--spacing-lg);
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: clamp(1.8rem, 5vw, 2.5rem);
   font-weight: 700;
-  margin-bottom: 2rem;
-  background: linear-gradient(90deg, #38bdf8, #818cf8);
+  margin-bottom: var(--spacing-lg);
+  background: var(--primary-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -36,53 +58,51 @@ h1 {
   max-width: 1000px;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
-  margin-bottom: 2rem;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
 }
 
 .input-section,
 .output-section {
   width: 100%;
-  background-color: #1e293b;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  background-color: var(--bg-medium);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
   border: 1px solid #334155;
-  transition: all 0.3s ease;
+  transition: var(--transition);
 }
 
 .input-section:hover,
 .output-section:hover {
-  border-color: #475569;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
-    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-lg);
 }
 
 textarea {
   width: 100%;
   padding: 12px 16px;
-  border-radius: 8px;
-  border: 1px solid #475569;
-  background-color: #0f172a;
-  color: #f8fafc;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-dark);
+  color: var(--text-light);
   font-size: 16px;
   resize: vertical;
   min-height: 150px;
-  transition: all 0.3s ease;
+  transition: var(--transition);
 }
 
 textarea:focus {
   outline: none;
-  border-color: #38bdf8;
+  border-color: var(--primary-color);
   box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
 }
 
 .controls {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
   align-items: flex-end;
 }
 
@@ -242,6 +262,10 @@ button:disabled {
 }
 
 @media (max-width: 767px) {
+  .App {
+    padding: var(--spacing-sm);
+  }
+
   .controls {
     flex-direction: column;
     align-items: stretch;
@@ -249,6 +273,40 @@ button:disabled {
 
   button {
     width: 100%;
+  }
+
+  .social-links {
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  .input-section,
+  .output-section {
+    padding: var(--spacing-sm);
+  }
+
+  textarea,
+  input[type="text"],
+  select {
+    font-size: 14px;
+    padding: 10px 14px;
+  }
+
+  button {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .translated-text {
+    padding: var(--spacing-sm);
+    min-height: 120px;
   }
 }
 
@@ -377,4 +435,45 @@ button:disabled {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+@media (hover: none) {
+  button,
+  select,
+  .social-links a {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+}
+
+@supports (-webkit-touch-callout: none) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
+
+@media print {
+  .App {
+    padding: 0;
+  }
+
+  .input-section {
+    display: none;
+  }
+
+  .output-section {
+    width: 100%;
+    box-shadow: none;
+    border: none;
+    background: white;
+    color: black;
+  }
+
+  .translated-text {
+    color: black;
+    background: white;
+    border: none;
+  }
 }
